@@ -1,10 +1,13 @@
-import React, { useEffect, Fragment } from "react";
+import React, { useContext, useEffect, Fragment } from "react";
 import Spinner from "../layout/Spinner";
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import Repos from "../repos/Repos";
+import GithubContext from "../../context/github/githubContext";
 
-const User = ({ getUser, getUserRepos, loading, repos, user, match }) => {
+const User = ({ match }) => {
+  const githubContext = useContext(GithubContext);
+  const { getUser, loading, user, repos, getUserRepos } = githubContext;
+
   // alternative for componentDidMount in function based components
   // with use of hooks
   useEffect(() => {
@@ -100,14 +103,6 @@ const User = ({ getUser, getUserRepos, loading, repos, user, match }) => {
       <Repos repos={repos} />
     </Fragment>
   );
-};
-
-User.propTypes = {
-  loading: PropTypes.bool,
-  user: PropTypes.object.isRequired,
-  getUser: PropTypes.func.isRequired,
-  getUserRepos: PropTypes.func.isRequired,
-  repos: PropTypes.array.isRequired
 };
 
 export default User;
